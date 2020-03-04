@@ -28,7 +28,6 @@ func faq(w http.ResponseWriter, r *http.Request) {
 }
 
 func pageNotFound(w http.ResponseWriter, r *http.Request) {
-	// w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, "<h1>***404 Page Not Found!***</h1>")
 }
 
@@ -48,10 +47,11 @@ func main() {
 
 	r := mux.NewRouter()
 	r.NotFoundHandler = nf
-	r.HandleFunc("/", home)
-	r.HandleFunc("/contact", contact)
-	r.HandleFunc("/faq", faq)
-	r.HandleFunc("/signup", usersC.New)
+	r.HandleFunc("/", home).Methods("GET")
+	r.HandleFunc("/contact", contact).Methods("GET")
+	r.HandleFunc("/faq", faq).Methods("GET")
+	r.HandleFunc("/signup", usersC.New).Methods("GET")
+	r.HandleFunc("/signup", usersC.Create).Methods("POST")
 
 	fmt.Println("Server listening on port 3000")
 	http.ListenAndServe(":3000", r)
