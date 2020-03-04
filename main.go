@@ -9,7 +9,7 @@ import (
 	"lenslocked.com/views"
 )
 
-var homeView, contactView, faqView *views.View
+var homeView, contactView, faqView, signupView *views.View
 
 func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
@@ -24,6 +24,11 @@ func contact(w http.ResponseWriter, r *http.Request) {
 func faq(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	must(faqView.Render(w, nil))
+}
+
+func signup(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	must(signupView.Render(w, nil))
 }
 
 func pageNotFound(w http.ResponseWriter, r *http.Request) {
@@ -43,12 +48,14 @@ func main() {
 	homeView = views.NewView("bootstrap", "views/home.gohtml")
 	contactView = views.NewView("bootstrap", "views/contact.gohtml")
 	faqView = views.NewView("bootstrap", "views/faq.gohtml")
+	signupView = views.NewView("bootstrap", "views/signup.gohtml")
 
 	r := mux.NewRouter()
 	r.NotFoundHandler = nf
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)
 	r.HandleFunc("/faq", faq)
+	r.HandleFunc("/signup", signup)
 
 	fmt.Println("Server listening on port 3000")
 	http.ListenAndServe(":3000", r)
