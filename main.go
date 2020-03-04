@@ -42,7 +42,7 @@ var nf http.Handler = http.HandlerFunc(pageNotFound)
 func main() {
 	homeView = views.NewView("bootstrap", "views/home.gohtml")
 	contactView = views.NewView("bootstrap", "views/contact.gohtml")
-	faqView = views.NewView("bootstrap", "views/faq.gohtml")
+	faqView = views.NewView("faqstrap", "views/faq.gohtml")
 
 	r := mux.NewRouter()
 	r.NotFoundHandler = nf
